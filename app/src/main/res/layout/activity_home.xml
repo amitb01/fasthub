@@ -30,6 +30,7 @@
         android:layout_below="@+id/toolbar_separator">
 
         <LinearLayout
+            android:id="@+id/filter_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
@@ -59,6 +60,7 @@
             android:background="@color/grey_extra_light"/>
 
         <LinearLayout
+            android:id="@+id/sort_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"

@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -39,6 +40,10 @@ public class HomeActivity extends MvpActivity<HomePresenter> implements HomePres
     RecyclerView repoRecyclerView;
     @Bind(R.id.progress_loader)
     RelativeLayout progressLoader;
+    @Bind(R.id.filter_button)
+    LinearLayout filterButton;
+    @Bind(R.id.sort_button)
+    LinearLayout sortButton;
 
     private MenuItem searchMenuItem;
     private boolean isSearchOpened = false;
