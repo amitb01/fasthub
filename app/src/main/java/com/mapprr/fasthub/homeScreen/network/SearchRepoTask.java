@@ -85,7 +85,7 @@ public class SearchRepoTask {
                 break;
             case STARGAZERS_DESC:
                 urlParams.put(Params.Url.SORT, VAL_SORTBY_STARS);
-                urlParams.put(Params.Url.ORDER, VAL_ORDER_ASC);
+                urlParams.put(Params.Url.ORDER, VAL_ORDER_DESC);
                 break;
         }
 
