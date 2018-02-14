@@ -1,6 +1,7 @@
 package com.mapprr.fasthub.homeScreen.presenter;
 
 import com.mapprr.fasthub.core.presenter.MvpPresenter;
+import com.mapprr.fasthub.homeScreen.model.SortType;
 import com.mapprr.fasthub.homeScreen.network.SearchRepoTask;
 import com.mapprr.fasthub.shared.model.Repo;
 import com.mapprr.fasthub.shared.model.RepoSearchResult;
@@ -10,10 +11,6 @@ import java.util.Comparator;
 import java.util.List;
 
 public class HomePresenter extends MvpPresenter<HomePresenter.View> {
-
-    public enum SortType {
-        WATCHERS_ASC, WATCHERS_DESC, FORKS_ASC, FORKS_DESC, STARGAZERS_ASC, STARGAZERS_DESC
-    }
 
     private String DEFAULT_SEARCH_KEYWORD = "rxjava";
 
@@ -92,6 +89,10 @@ public class HomePresenter extends MvpPresenter<HomePresenter.View> {
         getView().showRepoDetailsScreen(clickedRepo);
     }
 
+    public void onSortButtonClicked() {
+        getView().showSortOptionsView(sortType);
+    }
+
     private class SortByWatchersComp implements Comparator<Repo> {
 
         @Override
@@ -133,6 +134,8 @@ public class HomePresenter extends MvpPresenter<HomePresenter.View> {
         void showSearchFailureError(String errorMessage);
 
         void showNoResultsFoundError();
+
+        void showSortOptionsView(SortType currentSortType);
     }
 
 }

@@ -12,6 +12,14 @@
     <string name="no_results_found_error">No repos found for this keyword</string>
     <string name="no_repos_found_error">No repos found for this contributor</string>
     <string name="no_contributors_found_error">No contributors found for this repo</string>
-    <string name="filter_search_results">Filter</string>
-    <string name="sort_search_results">Sort</string>
+    <string name="filter_button_label">Filter</string>
+    <string name="sort_button_label">Sort</string>
+    <string name="sort_layout_header">SORT BY</string>
+    <string name="radio_button_watchers_asc">Watchers &#8212; Low to High</string>
+    <string name="radio_button_watchers_desc">Watchers &#8212; High to Low</string>
+    <string name="radio_button_forks_asc">Forks &#8212; Low to High</string>
+    <string name="radio_button_forks_desc">Forks &#8212; High to Low</string>
+    <string name="radio_button_stars_asc">Stars &#8212; Low to High</string>
+    <string name="radio_button_stars_desc">Stars &#8212; High to Low</string>
+
 </resources>

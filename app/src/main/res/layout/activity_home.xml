@@ -48,7 +48,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/filter_search_results"
+                android:text="@string/filter_button_label"
                 android:textColor="@color/grey"
                 android:textSize="16sp"/>
 
@@ -78,7 +78,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/sort_search_results"
+                android:text="@string/sort_button_label"
                 android:textColor="@color/grey"
                 android:textSize="16sp"/>
 

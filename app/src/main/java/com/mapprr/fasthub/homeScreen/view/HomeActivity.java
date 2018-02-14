@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.mapprr.fasthub.R;
 import com.mapprr.fasthub.core.view.MvpActivity;
+import com.mapprr.fasthub.homeScreen.model.SortType;
 import com.mapprr.fasthub.homeScreen.presenter.HomePresenter;
 import com.mapprr.fasthub.repoDetailsScreen.view.RepoDetailsActivity;
 import com.mapprr.fasthub.shared.adapter.RepoListAdapter;
@@ -31,8 +32,10 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
-public class HomeActivity extends MvpActivity<HomePresenter> implements HomePresenter.View {
+public class HomeActivity extends MvpActivity<HomePresenter> implements HomePresenter.View,
+                                                                        SortOptionsBottomSheet.Callback {
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -45,11 +48,17 @@ public class HomeActivity extends MvpActivity<HomePresenter> implements HomePres
     @Bind(R.id.sort_button)
     LinearLayout sortButton;
 
+    @OnClick(R.id.sort_button)
+    public void sortResults() {
+        getPresenter().onSortButtonClicked();
+    }
+
     private MenuItem searchMenuItem;
     private boolean isSearchOpened = false;
     private EditText searchEditText;
     private Timer repoSearchDebounceTimer;
     private RepoListAdapter repoListAdapter;
+    private SortOptionsBottomSheet sortOptionsBottomSheet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -214,6 +223,12 @@ public class HomeActivity extends MvpActivity<HomePresenter> implements HomePres
     }
 
     @Override
+    public void onSortButtonClicked(SortType sortType) {
+        sortOptionsBottomSheet.dismissAllowingStateLoss();
+        getPresenter().onSortTypeSelected(sortType);
+    }
+
+    @Override
     public void renderSearchedRepos(List<Repo> repoList) {
         repoListAdapter.updateAdapterData(repoList);
     }
@@ -252,6 +267,12 @@ public class HomeActivity extends MvpActivity<HomePresenter> implements HomePres
     public void showNoResultsFoundError() {
         runOnUiThread(() -> Toast.makeText(this, getResources().getString(R.string.no_results_found_error),
                                            Toast.LENGTH_LONG).show());
+    }
+
+    @Override
+    public void showSortOptionsView(SortType currentSortType) {
+        sortOptionsBottomSheet = SortOptionsBottomSheet.newInstance(currentSortType);
+        sortOptionsBottomSheet.show(getSupportFragmentManager(), sortOptionsBottomSheet.getTag());
     }
 }
 

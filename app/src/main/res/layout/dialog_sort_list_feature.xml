@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              android:paddingBottom="16dp"
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp"
+        android:paddingLeft="20dp"
+        android:paddingTop="8dp"
+        android:text="@string/sort_layout_header"
+        android:textColor="@color/grey_light"
+        android:textSize="12sp"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grey_extra_light"
+        />
+
+    <RadioGroup
+        android:id="@+id/radio_group_sort"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:paddingRight="16dp"
+        >
+
+        <RadioButton
+            android:id="@+id/watchers_asc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="4dp"
+            android:gravity="start|center_vertical"
+            android:layoutDirection="rtl"
+            android:text="@string/radio_button_watchers_asc"
+            android:textColor="@color/grey"
+            android:textSize="14sp"
+            />
+
+        <RadioButton
+            android:id="@+id/watchers_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="4dp"
+            android:checked="true"
+            android:gravity="start|center_vertical"
+            android:layoutDirection="rtl"
+            android:text="@string/radio_button_watchers_desc"
+            android:textColor="@color/grey"
+            android:textSize="14sp"
+            />
+
+        <RadioButton
+            android:id="@+id/forks_asc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="4dp"
+            android:gravity="start|center_vertical"
+            android:layoutDirection="rtl"
+            android:text="@string/radio_button_forks_asc"
+            android:textColor="@color/grey"
+            android:textSize="14sp"
+            />
+
+        <RadioButton
+            android:id="@+id/forks_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="4dp"
+            android:gravity="start|center_vertical"
+            android:layoutDirection="rtl"
+            android:text="@string/radio_button_forks_desc"
+            android:textColor="@color/grey"
+            android:textSize="14sp"
+            />
+
+        <RadioButton
+            android:id="@+id/stars_asc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="4dp"
+            android:gravity="start|center_vertical"
+            android:layoutDirection="rtl"
+            android:text="@string/radio_button_stars_asc"
+            android:textColor="@color/grey"
+            android:textSize="14sp"
+            />
+
+        <RadioButton
+            android:id="@+id/stars_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="4dp"
+            android:gravity="start|center_vertical"
+            android:layoutDirection="rtl"
+            android:text="@string/radio_button_stars_desc"
+            android:textColor="@color/grey"
+            android:textSize="14sp"
+            />
+
+    </RadioGroup>
+
+</LinearLayout>
