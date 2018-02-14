@@ -14,7 +14,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -27,6 +26,7 @@ import com.mapprr.fasthub.shared.adapter.RepoListAdapter;
 import com.mapprr.fasthub.shared.model.Repo;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -35,7 +35,8 @@ import butterknife.Bind;
 import butterknife.OnClick;
 
 public class HomeActivity extends MvpActivity<HomePresenter> implements HomePresenter.View,
-                                                                        SortOptionsBottomSheet.Callback {
+                                                                        SortOptionsBottomSheet.Callback,
+                                                                        FiltersBottomSheet.Callback {
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -43,14 +44,15 @@ public class HomeActivity extends MvpActivity<HomePresenter> implements HomePres
     RecyclerView repoRecyclerView;
     @Bind(R.id.progress_loader)
     RelativeLayout progressLoader;
-    @Bind(R.id.filter_button)
-    LinearLayout filterButton;
-    @Bind(R.id.sort_button)
-    LinearLayout sortButton;
 
     @OnClick(R.id.sort_button)
     public void sortResults() {
         getPresenter().onSortButtonClicked();
+    }
+
+    @OnClick(R.id.filter_button)
+    public void filterResults() {
+        getPresenter().onFiltersButtonClicked();
     }
 
     private MenuItem searchMenuItem;
@@ -59,6 +61,7 @@ public class HomeActivity extends MvpActivity<HomePresenter> implements HomePres
     private Timer repoSearchDebounceTimer;
     private RepoListAdapter repoListAdapter;
     private SortOptionsBottomSheet sortOptionsBottomSheet;
+    private FiltersBottomSheet filtersBottomSheet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -223,12 +226,6 @@ public class HomeActivity extends MvpActivity<HomePresenter> implements HomePres
     }
 
     @Override
-    public void onSortButtonClicked(SortType sortType) {
-        sortOptionsBottomSheet.dismissAllowingStateLoss();
-        getPresenter().onSortTypeSelected(sortType);
-    }
-
-    @Override
     public void renderSearchedRepos(List<Repo> repoList) {
         repoListAdapter.updateAdapterData(repoList);
     }
@@ -273,6 +270,24 @@ public class HomeActivity extends MvpActivity<HomePresenter> implements HomePres
     public void showSortOptionsView(SortType currentSortType) {
         sortOptionsBottomSheet = SortOptionsBottomSheet.newInstance(currentSortType);
         sortOptionsBottomSheet.show(getSupportFragmentManager(), sortOptionsBottomSheet.getTag());
+    }
+
+    @Override
+    public void onSortButtonClicked(SortType sortType) {
+        sortOptionsBottomSheet.dismissAllowingStateLoss();
+        getPresenter().onSortTypeSelected(sortType);
+    }
+
+    @Override
+    public void showFiltersView(Date startDate, Date endDate) {
+        filtersBottomSheet = FiltersBottomSheet.newInstance(startDate, endDate);
+        filtersBottomSheet.show(getSupportFragmentManager(), filtersBottomSheet.getTag());
+    }
+
+    @Override
+    public void onDateRangeSet(Date startDate, Date endDate) {
+        filtersBottomSheet.dismissAllowingStateLoss();
+        getPresenter().onCreatedDateRangeSet(startDate, endDate);
     }
 }
 

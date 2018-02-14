@@ -8,6 +8,7 @@ import com.mapprr.fasthub.shared.model.RepoSearchResult;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 public class HomePresenter extends MvpPresenter<HomePresenter.View> {
@@ -15,6 +16,9 @@ public class HomePresenter extends MvpPresenter<HomePresenter.View> {
     private String searchKeyword;
     private List<Repo> repoList;
     private SortType sortType;
+
+    private Date startDate;
+    private Date endDate;
 
     public HomePresenter() {
         searchKeyword = "rxjava";
@@ -37,11 +41,20 @@ public class HomePresenter extends MvpPresenter<HomePresenter.View> {
         refreshResults();
     }
 
+    public void onCreatedDateRangeSet(Date startDate, Date endDate) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        refreshResults();
+    }
+
     private void refreshResults() {
         getView().showLoader();
         getView().hideReposList();
+
         new SearchRepoTask(searchKeyword,
                            sortType,
+                           startDate,
+                           endDate,
                            response -> handleSearchResults(response),
                            (statusCode, errorMessage) -> handleSearchFailure(errorMessage)).execute();
     }
@@ -88,6 +101,10 @@ public class HomePresenter extends MvpPresenter<HomePresenter.View> {
         getView().showSortOptionsView(sortType);
     }
 
+    public void onFiltersButtonClicked() {
+        getView().showFiltersView(startDate, endDate);
+    }
+
     private class SortByWatchersComp implements Comparator<Repo> {
 
         @Override
@@ -115,6 +132,8 @@ public class HomePresenter extends MvpPresenter<HomePresenter.View> {
         void showNoResultsFoundError();
 
         void showSortOptionsView(SortType currentSortType);
+
+        void showFiltersView(Date startDate, Date endDate);
     }
 
 }

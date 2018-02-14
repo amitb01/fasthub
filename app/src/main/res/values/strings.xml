@@ -15,6 +15,7 @@
     <string name="filter_button_label">Filter</string>
     <string name="sort_button_label">Sort</string>
     <string name="sort_layout_header">SORT BY</string>
+    <string name="filter_layout_header">FILTER BY</string>
     <string name="radio_button_watchers_asc">Watchers &#8212; Low to High</string>
     <string name="radio_button_watchers_desc">Watchers &#8212; High to Low</string>
     <string name="radio_button_forks_asc">Forks &#8212; Low to High</string>

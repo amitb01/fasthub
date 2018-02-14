@@ -10,7 +10,10 @@ import com.mapprr.fasthub.network.listeners.VolleyOnErrorListener;
 import com.mapprr.fasthub.network.listeners.VolleyOnSuccessListener;
 import com.mapprr.fasthub.shared.model.RepoSearchResult;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 
 public class SearchRepoTask {
 
@@ -23,11 +26,15 @@ public class SearchRepoTask {
 
     private String searchQuery;
     private SortType sortType;
+    private String startDate;
+    private String endDate;
     private VolleyOnSuccessListener<RepoSearchResult> volleyOnSuccessListener;
     private VolleyOnErrorListener volleyOnErrorListener;
 
     public SearchRepoTask(String searchQuery,
                           SortType sortType,
+                          Date startDate,
+                          Date endDate,
                           VolleyOnSuccessListener<RepoSearchResult> volleyOnSuccessListener,
                           VolleyOnErrorListener volleyOnErrorListener) {
 
@@ -35,12 +42,30 @@ public class SearchRepoTask {
         this.sortType = sortType;
         this.volleyOnSuccessListener = volleyOnSuccessListener;
         this.volleyOnErrorListener = volleyOnErrorListener;
+
+        String dateFormat = "yyyy/MM/dd";
+        SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.US);
+        if (startDate != null) {
+            this.startDate = sdf.format(startDate);
+            this.startDate = this.startDate.replaceAll("/", "-");
+        }
+        if (endDate != null) {
+            this.endDate = sdf.format(endDate);
+            this.endDate = this.endDate.replaceAll("/", "-");
+        }
     }
 
     public void execute() {
         String url = UrlPaths.getBaseUrl() + UrlPaths.SEARCH_REPO_URL;
 
         searchQuery = searchQuery.replaceAll(" ", "+");
+        if (startDate != null && endDate != null) {
+            searchQuery += "+created:" + startDate + ".." + endDate;
+        } else if (startDate != null) {
+            searchQuery += "+created:>=" + startDate;
+        } else if (endDate != null) {
+            searchQuery += "+created:<=" + endDate;
+        }
 
         HashMap<String, String> urlParams = new HashMap<>();
         urlParams.put(Params.Url.QUERY, searchQuery);
