@@ -10,6 +10,8 @@ public interface Params {
     interface Url {
 
         String QUERY = "q";
+        String SORT = "sort";
+        String ORDER = "order";
     }
 
     interface Body {

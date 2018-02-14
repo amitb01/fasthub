@@ -12,69 +12,64 @@ import java.util.List;
 
 public class HomePresenter extends MvpPresenter<HomePresenter.View> {
 
-    private String DEFAULT_SEARCH_KEYWORD = "rxjava";
-
+    private String searchKeyword;
     private List<Repo> repoList;
     private SortType sortType;
 
     public HomePresenter() {
+        searchKeyword = "rxjava";
         sortType = SortType.WATCHERS_DESC;
     }
 
     @Override
     public void attachView(View view) {
         super.attachView(view);
-        onRepoSearched(DEFAULT_SEARCH_KEYWORD);
+        refreshResults();
     }
 
-    public void onRepoSearched(String searchKeyword) {
-        getView().showLoader();
-        getView().hideReposList();
-        new SearchRepoTask(searchKeyword,
-                           response -> handleSearchResults(response),
-                           (statusCode, errorMessage) -> handleSearchFailure(errorMessage)).execute();
+    public void onKeywordSearched(String searchKeyword) {
+        this.searchKeyword = searchKeyword;
+        refreshResults();
     }
 
     public void onSortTypeSelected(SortType sortType) {
         this.sortType = sortType;
+        refreshResults();
+    }
+
+    private void refreshResults() {
         getView().showLoader();
         getView().hideReposList();
-
-        switch (sortType) {
-            case WATCHERS_ASC:
-                Collections.sort(repoList, new SortByWatchersComp());
-                break;
-            case WATCHERS_DESC:
-                Collections.sort(repoList, Collections.reverseOrder(new SortByWatchersComp()));
-                break;
-            case FORKS_ASC:
-                Collections.sort(repoList, new SortByForksComp());
-                break;
-            case FORKS_DESC:
-                Collections.sort(repoList, Collections.reverseOrder(new SortByForksComp()));
-                break;
-            case STARGAZERS_ASC:
-                Collections.sort(repoList, new SortByStarsComp());
-                break;
-            case STARGAZERS_DESC:
-                Collections.sort(repoList, Collections.reverseOrder(new SortByStarsComp()));
-                break;
-        }
-
-        getView().hideLoader();
-        getView().showReposList();
-        getView().renderSearchedRepos(repoList);
+        new SearchRepoTask(searchKeyword,
+                           sortType,
+                           response -> handleSearchResults(response),
+                           (statusCode, errorMessage) -> handleSearchFailure(errorMessage)).execute();
     }
 
     private void handleSearchResults(RepoSearchResult searchResult) {
         if (isViewAttached()) {
+            getView().hideLoader();
+
             if (searchResult.getRepoList().size() > 0) {
                 repoList = searchResult.getRepoList();
-                onSortTypeSelected(sortType);
+                sortResultsForCustomSortType();
+                getView().showReposList();
+                getView().renderSearchedRepos(repoList);
             } else {
-                getView().hideLoader();
                 getView().showNoResultsFoundError();
             }
+        }
+    }
+
+    private void sortResultsForCustomSortType() {
+        switch (sortType) {
+            case WATCHERS_ASC:
+                Collections.sort(repoList, new SortByWatchersComp());
+                getView().renderSearchedRepos(repoList);
+                break;
+            case WATCHERS_DESC:
+                Collections.sort(repoList, Collections.reverseOrder(new SortByWatchersComp()));
+                break;
         }
     }
 
@@ -98,22 +93,6 @@ public class HomePresenter extends MvpPresenter<HomePresenter.View> {
         @Override
         public int compare(Repo repo1, Repo repo2) {
             return repo1.getWatchersCount() - repo2.getWatchersCount();
-        }
-    }
-
-    private class SortByForksComp implements Comparator<Repo> {
-
-        @Override
-        public int compare(Repo repo1, Repo repo2) {
-            return repo1.getForksCount() - repo2.getForksCount();
-        }
-    }
-
-    private class SortByStarsComp implements Comparator<Repo> {
-
-        @Override
-        public int compare(Repo repo1, Repo repo2) {
-            return repo1.getStargazersCount() - repo2.getStargazersCount();
         }
     }
 

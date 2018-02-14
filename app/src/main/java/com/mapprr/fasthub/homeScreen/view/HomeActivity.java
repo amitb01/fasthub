@@ -217,7 +217,7 @@ public class HomeActivity extends MvpActivity<HomePresenter> implements HomePres
         repoSearchDebounceTimer.schedule(new TimerTask() {
             @Override
             public void run() {
-                getPresenter().onRepoSearched(keyword);
+                getPresenter().onKeywordSearched(keyword);
             }
         }, 750);
     }
