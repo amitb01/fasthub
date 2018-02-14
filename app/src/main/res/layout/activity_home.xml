@@ -17,17 +17,17 @@
         android:id="@+id/toolbar_separator"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/grey_extra_light"
-        android:layout_below="@+id/toolbar"/>
+        android:layout_below="@+id/toolbar"
+        android:background="@color/grey_extra_light"/>
 
     <LinearLayout
         android:id="@+id/filters_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar_separator"
         android:layout_gravity="bottom"
-        android:orientation="horizontal"
         android:background="@color/white"
-        android:layout_below="@+id/toolbar_separator">
+        android:orientation="horizontal">
 
         <LinearLayout
             android:id="@+id/filter_button"
@@ -41,16 +41,16 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="8dp"
                 android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
                 android:src="@drawable/ic_tune_black_24dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@string/filter_search_results"
                 android:textColor="@color/grey"
-                android:textSize="16sp"
-                android:text="@string/filter_search_results"/>
+                android:textSize="16sp"/>
 
         </LinearLayout>
 
@@ -71,16 +71,16 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="4dp"
                 android:layout_marginEnd="4dp"
+                android:layout_marginRight="4dp"
                 android:src="@drawable/ic_swap_vert_black_24dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@string/sort_search_results"
                 android:textColor="@color/grey"
-                android:textSize="16sp"
-                android:text="@string/sort_search_results"/>
+                android:textSize="16sp"/>
 
         </LinearLayout>
 
@@ -97,17 +97,17 @@
             android:id="@+id/list_repos"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:listitem="@layout/item_repository"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
             android:clipToPadding="false"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            tools:listitem="@layout/item_repository"
             />
 
         <include
             android:id="@+id/progress_loader"
+            layout="@layout/circular_progress_loader"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            layout="@layout/circular_progress_loader"
             android:visibility="gone"
             tools:visibility="gone"/>
 
